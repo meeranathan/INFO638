@@ -35,6 +35,7 @@
 
     <?php
     $bottles = 99;
+    // this answers both 2a and 2b 
     while ($bottles > 0 ) {
         echo $bottles. " bottles of beer on the wall. " .$bottles. " bottles of beer.";
         $bottles--;
