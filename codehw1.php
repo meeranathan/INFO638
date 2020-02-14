@@ -19,45 +19,48 @@
 
     <?php 
 
-    $inputChange = 132; // to test code, change input value here 
+    function determineChange($inputChange) {
+        if (gettype($inputChange) == "integer" && $inputChange > 0) { // check for correct input type and positive number
+            //find number of dollars
+            $dollars = (int) ($inputChange / 100);
 
-    if (gettype($inputChange) == "integer" && $inputChange > 0) { // check for correct input type and positive number
-        //find number of dollars
-        $dollars = (int) ($inputChange / 100);
+            //find remainder after dollars 
+            $leftAfterDollars = $inputChange % 100;
 
-        //find remainder after dollars 
-        $leftAfterDollars = $inputChange % 100;
+            //find number of quarters 
+            $quarters = (int) ($leftAfterDollars / 25);
 
-        //find number of quarters 
-        $quarters = (int) ($leftAfterDollars / 25);
+            //find remainder after quarters 
+            $leftAfterQuarters = $leftAfterDollars % 25;
 
-        //find remainder after quarters 
-        $leftAfterQuarters = $leftAfterDollars % 25;
+            //find number of dimes
+            $dimes = (int) ($leftAfterQuarters / 10);
 
-        //find number of dimes
-        $dimes = (int) ($leftAfterQuarters / 10);
+            //find remainder after dimes 
+            $leftAfterDimes = $leftAfterQuarters % 10;
 
-        //find remainder after dimes 
-        $leftAfterDimes = $leftAfterQuarters % 10;
+            //find number of nickles
+            $nickels = (int) ($leftAfterDimes / 5);
 
-        //find number of nickles
-        $nickels = (int) ($leftAfterDimes / 5);
+            //find remainder after nickles 
+            $leftAfterNickels = $leftAfterDimes % 5;
 
-        //find remainder after nickles 
-        $leftAfterNickels = $leftAfterDimes % 5;
+            //find number of pennies 
+            $pennies = ($leftAfterNickels); 
 
-        //find number of pennies 
-        $pennies = ($leftAfterNickels); 
-
-        echo "You are due " . $inputChange . " cents in change. ";
+            echo "You are due " . $inputChange . " cents in change. ";
 
 
-        echo "You will get back ". $dollars ." dollar bill(s), ". $quarters ." quarter(s), ". $dimes. " dime(s), ". $nickels. " nickel(s), and ". $pennies. " pennie(s)" ;
+            echo "You will get back ". $dollars ." dollar bill(s), ". $quarters ." quarter(s), ". $dimes. " dime(s), ". $nickels. " nickel(s), and ". $pennies. " pennie(s)" ;
     
 
-    } else {
-        echo "Please input an appropriate number of cents."; // output for inappropriate inputs 
+        } else {
+            echo "Please input an appropriate number of cents."; // output for inappropriate inputs 
+        }       
     }
+
+    determineChange(285); // to test code, change input value here 
+
     
 
     ?>
@@ -68,21 +71,22 @@
 
     <?php
     // this answers both 2a and 2b 
-    $bottles = 99; //to test code, change input value here 
-    if (gettype($bottles)== "integer" && $bottles > 0) { //check for correct input type and positive number 
-        while ($bottles > 0 ) { //loop through number of bottles until terminating case 
-        echo $bottles. " bottles of beer on the wall. " .$bottles. " bottles of beer."; //print first half of verse
-        $bottles--; // decrement bottles
-        echo " Take one down, pass it around, ".$bottles. " bottles of beer on the wall."; //print second half of verse 
-        print "<p>";
-        }
+
+    function singSong($bottles) {
+        if (gettype($bottles)== "integer" && $bottles > 0) { //check for correct input type and positive number 
+            while ($bottles > 0 ) { //loop through number of bottles until terminating case 
+            echo $bottles. " bottles of beer on the wall. " .$bottles. " bottles of beer."; //print first half of verse
+            $bottles--; // decrement bottles
+            echo " Take one down, pass it around, ".$bottles. " bottles of beer on the wall."; //print second half of verse 
+            print "<p>";
+            }
     
-    } else {
-        echo "Please input an appropriate number of bottles."; //output for inappropriate inputs
+        } else {
+            echo "Please input an appropriate number of bottles."; //output for inappropriate inputs
+        }
+
     }
-        
-
-
+    singSong(6); //to test code, change input value here 
     ?>
 
  </body>
