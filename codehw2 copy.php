@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title> Code Homework 2 </title>
+    <title> Code Homework 3 </title>
     <style>
     body { 
         background-color: #d6bfdd;
@@ -17,39 +17,25 @@
 </head>
 
 <body> 
-    <h1> Challenge 1: ISBN Validation </h1>
+    <h1> Challenge 1: Book List </h1>
 
     <?php 
 
 
-        function checkISBN($isbn) {
-            $total = 0;
-            if ( strlen($isbn) == 10 &&$isbn[9] == "X"  ) { // check if last number is X to avoid warning during loop
-                $total = 10;
-                for($i = 0; $i < 9; $i++) {
-                    $total = $total + ($isbn[$i] * (10-$i)); 
-                } 
+        $titles = array("PHP and MySQL Web Development", 
+            "Web Design with HTML, CSS, JavaScript and jQuery", 
+            "PHP Cookbook: Solutions & Examples for PHP Programmers",
+            "JavaScript and JQuery: Interactive Front-End Web Development", 
+            "Modern PHP: New Features and Good Practices",
+            "Programming PHP");
+        $authors = array("Luke Welling","Jon Duckett","David Sklar","Jon Duckett","Josh Lockhart", "Kevin Tatroe");
+        $pages = array(144, 135, 14, 251, 7, 26);
+        $types = array("Paperback","Paperback","Paperback","Paperback","Paperback","Paperback");
+        $price = array(31.63, 41.23, 40.88, 22.09, 28.49, 28.96);
 
-            } else if (strlen($isbn) == 10){
-                for($i = 0; $i < 10; $i++) {
-                    $total = $total + ($isbn[$i] * (10-$i));
-                }
-               
-            } else {
-                $total = 1;
-            }
+        $books = array($titles, $authors, $pages, $types, $price);
 
-            print "Checking ISBN: " .$isbn." for validity....";
-            print "<p>";
-
-            if ($total % 11 == 0) {
-                print $isbn." is a valid ISBN.";
-            } else {
-                print $isbn." is not a valid ISBN";
-            }
-        }
-
-        echo checkISBN("0970601980");
+        print 
 
     ?>
 
