@@ -39,7 +39,7 @@
         <td> Price ($) </td>
         </tr>";
         //loop through books 
-        foreach ($books as $thing) {
+        foreach ($books as $thing) {s
             echo "<tr>";
             //loop through book information for each book
             foreach ($thing as $piece) {
