@@ -1,20 +1,34 @@
+<?php
+session_start();
+?>
+<!doctype HTML>
 <html> 
 <head>
-<title> Your profile </title>
+<title> IHFAH:Your profile </title>
 </head>
 <body>
 
 <?php
-
 //db credentials and style
+//require_once 'login.php';
 include 'header.php';
+include 'style.php';
+
 
 //connect to db
 $conn = new mysqli($hn, $un, $pw, $db);
 if ($conn->connect_error) die($conn->connect_error);
 
-//get username - currently one user is hardcoded until login page is built out
-$query = "SELECT * FROM `user` WHERE user_id = 1";
+//test for session start
+ if (!isset($_SESSION['username']) || !isset($_SESSION['password']) ) {
+    echo "nope";
+    
+}
+
+//get username
+$id= $_SESSION['user_id'];
+
+$query = "SELECT * FROM `user` WHERE user_id = '$id'";
 
 $result = $conn->query($query);
 if (!$result) die("Fatal Error");
@@ -25,29 +39,23 @@ while ($row = $result->fetch_assoc()) {
     echo "<h1> Hi, ". $row["username"]. ". This is your Profile </h1>"; 
 }
 
-//action buttons link to recipe, ingredients, and meal pages (with forms) that are not yet built
-
-echo "<button>Add a Recipe</button>";
-echo "<button>Add ingredients</button>";
-echo "<button>Add a Meal</button>";
-
 echo "<h2> Here are your recipes. </h2>";
 
 //query and display list of recipes 
-$query="SELECT title from recipe where recipe_id = (SELECT recipe_id FROM meal WHERE user_id=1)";
+$query="SELECT title from recipe where recipe_id = (SELECT recipe_id WHERE user_id='$id')";
 
 $result = $conn->query($query);
 if (!$result) die("Fatal Error");
 
 while ($row = $result->fetch_assoc()) {
-    echo $row["title"];
+    echo $row["title"]."<p></p>";
 }
 
 echo "<h2> Here are the ingredients you have.</h2>";
 
-//query and display list of ingredients 
+//query and display list of ingredients which have a quantity of over 0g. 
 
-$query="SELECT ingredient_id, name, amt_available FROM ingredient WHERE user_id = 1";
+$query="SELECT ingredient_id, name, amt_available FROM ingredient WHERE user_id = $id && amt_available > 0";
 $result = $conn->query($query);
 if (!$result) die("Fatal Error");
 while ($row = $result->fetch_assoc()) {
@@ -56,26 +64,22 @@ while ($row = $result->fetch_assoc()) {
 
 echo "<h2> Here are the meals you've had.</h2>";
 
-//query and display meals - how do I get data from separate queries to print in the same while loop?
-//goal is to make it so that meal and date are in the same row (relevant regardless of table format)
+//query and display meals
 
-$query="SELECT title from recipe where recipe_id = (SELECT recipe_id FROM meal WHERE user_id=1)";
+$query="SELECT * FROM recipe NATURAL JOIN meal WHERE user_id =$id";
 $result = $conn->query($query);
 if (!$result) die("Fatal Error");
 
 while ($row = $result->fetch_assoc()) {
-    echo $row["title"]."<p></p>";
+    echo $row["title"].", ".$row["date"]."<p></p>";
 }
-$query="SELECT date from meal where user_id=1";
-$result = $conn->query($query);
-if (!$result) die("Fatal Error");
-while ($row = $result->fetch_assoc()) {
-    echo $row["date"]."<p></p>";
-}
-
-
-
 
 ?>
+
+<a href='recipes.php'>View or Add Recipes</a>
+<p></p>
+<a href='ingredients.php'>View or Add Ingredients<a>
+<p></p>
+<a href="logout.php">Log Out</a>
 </body>
 </html>
